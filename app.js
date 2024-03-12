@@ -1,12 +1,18 @@
-const express = require('express')
-const app = express();
-const port= 3000;
 
-app.get('/',(req,res) =>{
-res.send('app is working');
-});
+var express = require('express');
+const bodyParser = require("body-parser");
+var app = express();
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static(__dirname + '/public'));
+
+//index Route
+var indexRouter = require('./routes/index');
+app.use('/api', indexRouter);
 
 
-app.listen(port,()=>{
-    console.log(`server running on port ${port}`);
-})
+
+
+module.exports = app;
